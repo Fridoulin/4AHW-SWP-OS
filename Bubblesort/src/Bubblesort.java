@@ -9,7 +9,7 @@ public class Bubblesort {
     static ArrayList<Integer> rndArray = new ArrayList<>();
 
     public static void main(String[] args) {
-        long zeitSequentiellEnde, zeitSequentiell, zeitSequentiellAnfang;
+        long zeitBubblesortEnde, zeitBubblesort, zeitBubblesortAnfang;
         int size;
 
 
@@ -21,15 +21,15 @@ public class Bubblesort {
             Random rnd = new Random();
             rndArray.add(rnd.nextInt());
         }
-        zeitSequentiellAnfang = System.currentTimeMillis();
+        zeitBubblesortAnfang = System.currentTimeMillis();
         b.bubbleSort();
-        zeitSequentiellEnde = System.currentTimeMillis();
+        zeitBubblesortEnde = System.currentTimeMillis();
 
         System.out.println(rndArray);
 
 
 
-        zeitSequentiell = zeitSequentiellEnde - zeitSequentiellAnfang;
+        zeitBubblesort = zeitBubblesortEnde - zeitBubblesortAnfang;
         System.out.println(zeitSequentiell + " Millisekunden wurden benötigt");
     }
 
