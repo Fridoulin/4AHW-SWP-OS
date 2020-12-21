@@ -53,30 +53,25 @@ public class insertionsort {
         System.out.println("");
 
         zeitAnfang = System.nanoTime();
-        s.binarysort(arr);
+        s.binaryInsertionSort(arr);
         zeittEnde = System.nanoTime();
         zeit = zeittEnde  - zeitAnfang;
-        System.out.println("Binarysort aufwärts (0-99): " + zeit);
+        System.out.println("Binary Insertion Sort aufwärts (0-99): " + zeit);
 
         zeitAnfang = System.nanoTime();
-        s.binarysort(arrDown);
+        s.binaryInsertionSort(arrDown);
         zeittEnde = System.nanoTime();
         zeit = zeittEnde  - zeitAnfang;
-        System.out.println("Binarysort abwärts (99-0): " + zeit);
+        System.out.println("Binary Insertion Sort abwärts (99-0): " + zeit);
 
 
         zeitAnfang = System.nanoTime();
-        s.binarysort(arrRnd);
+        s.binaryInsertionSort(arrRnd);
         zeittEnde = System.nanoTime();
         zeit = zeittEnde  - zeitAnfang;
-        System.out.println("Random Binarysort: " + zeit);
-
-
+        System.out.println("Random Binary Insertion Sort: " + zeit);
        // s.output(arr, arrDown, arrRnd);
-
-
     }
-
     void input(){
         System.out.println("In welchem Bereich? ");
         input = reader.nextInt();
@@ -111,17 +106,32 @@ public class insertionsort {
             arr[j + 1] = key;
         }
     }
-    public void binarysort(int arr[]) {
-        for (int i = 1; i < arr.length; i++)
-        {
-            int x = arr[i];
-            int j = Math.abs(
-                    Arrays.binarySearch(arr, 0,
-                            i, x) + 1);
-            System.arraycopy(arr, j,
-                    arr, j + 1, i - j);
-            arr[j] = x;
+    public void binaryInsertionSort(int arr[]) {
+        int length = arr.length;
+
+        for (int i = 1; i < length; ++i) {
+            int key = arr[i];
+            int insertedPosition = findPosition(arr, 0, i - 1, key);
+
+            for (int j = i - 1; j >= insertedPosition; --j) {
+                arr[j + 1] = arr[j];
+            }
+
+            arr[insertedPosition] = key;
         }
+    }
+    public static int findPosition(int[] arr, int start, int end, int key) {
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            if (key < arr[mid]) {
+                end = mid - 1;
+            } else {
+                start = mid + 1;
+            }
+        }
+
+        return start;
     }
     void bubbleSort(int[] arr) {
         int n = arr.length;
