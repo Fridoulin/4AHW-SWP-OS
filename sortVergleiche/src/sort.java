@@ -5,7 +5,7 @@ public class sort {
     static int avgBVGL, avgB, avgIVGL,avgI , avgSVGL, avgS, avgSSVGL, avgSS, medianB, medianBVGL, medianI, medianIVGL, medianS, medianSVGL, medianSS, medianSSVGL,arrLength, rndSize;
     static ArrayList<Long> insertionVergleiche = new ArrayList<>();
     static ArrayList<Long> insertionVerschieben = new ArrayList<>();
-    static ArrayList<Long> bubbleVergleriche = new ArrayList<>();
+    static ArrayList<Long> bubbleVergleiche = new ArrayList<>();
     static ArrayList<Long> bubbleVerschieben = new ArrayList<>();
     static ArrayList<Long> selectionVergleiche = new ArrayList<>();
     static ArrayList<Long> selectionVerschieben = new ArrayList<>();
@@ -58,7 +58,7 @@ public class sort {
                 tempVerschieben++;
             }
         }
-        bubbleVergleriche.add(tempVergleiche);
+        bubbleVergleiche.add(tempVergleiche);
         bubbleVerschieben.add(tempVerschieben);
     }
     static void insertionSort(int[] array){
@@ -124,27 +124,37 @@ public class sort {
         stableVerschieben.add(tempVerschieben);
     }
     static void avg(){
-        int tempB = 0, tempI = 0, tempS = 0, tempSS = 0;
-        for(int i = 0; i < array.length; i++){
-            tempB += array[i];
-            tempI += array[i];
-            tempS += array[i];
-            tempSS += array[i];
+        int tempB = 0, tempBVGL = 0, tempI = 0, tempIVGL = 0,tempS = 0, tempSVGL = 0,tempSSVGL = 0, tempSS = 0;
+        for(int i = 0; i < bubbleVerschieben.size(); i++) {
+            tempB += bubbleVerschieben.get(i);
+            tempBVGL += bubbleVergleiche.get(i);
         }
+        for(int i = 0; i < insertionVerschieben.size(); i++) {
+            tempI += insertionVerschieben.get(i);
+            tempIVGL += insertionVergleiche.get(i);
+        }
+        for(int i = 0; i < selectionVerschieben.size(); i++) {
+            tempS += selectionVerschieben.get(i);
+            tempSVGL += selectionVergleiche.get(i);
+            tempSS += stableVerschieben.get(i);
+            tempSSVGL += stableVergleiche.get(i);
+        }
+
+
         avgB =tempB/bubbleVerschieben.size();
-        avgBVGL=tempB/bubbleVergleriche.size();
+        avgBVGL=tempBVGL/ bubbleVergleiche.size();
         avgI=tempI/insertionVerschieben.size();
-        avgIVGL=tempI/insertionVergleiche.size();
+        avgIVGL=tempIVGL/insertionVergleiche.size();
         avgS=tempS/selectionVerschieben.size();
-        avgSVGL=tempS/selectionVergleiche.size();
+        avgSVGL=tempSVGL/selectionVergleiche.size();
         avgSS=tempSS/stableVerschieben.size();
-        avgSSVGL=tempSS/stableVergleiche.size();
+        avgSSVGL=tempSSVGL/stableVergleiche.size();
 
 
     }
     static void median(){
         medianB = bubbleVerschieben.size()/2;
-        medianBVGL = bubbleVergleriche.size()/2;
+        medianBVGL = bubbleVergleiche.size()/2;
         medianI = insertionVerschieben.size()/2;
         medianIVGL = insertionVergleiche.size()/2;
         medianS = selectionVerschieben.size()/2;
@@ -155,7 +165,7 @@ public class sort {
     }
     static void output(){
         System.out.println("");
-        System.out.println("Buuble Vergleiche: "+bubbleVergleriche.get(0));
+        System.out.println("Buuble Vergleiche: "+ bubbleVergleiche.get(0));
         System.out.println("Buuble Verschieben: "+bubbleVerschieben.get(1));
         System.out.println("Bubble Durchschnitt Vergleiche: "+avgBVGL);
         System.out.println("Bubble Durchschnitt Tauschen: "+avgB);
