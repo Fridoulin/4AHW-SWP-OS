@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class sort {
+    static Scanner r = new Scanner(System.in);
     static ArrayList<Long> insertionVergleiche = new ArrayList<>();
     static ArrayList<Long> insertionVerschieben = new ArrayList<>();
     static ArrayList<Long> insertionZeit = new ArrayList<>();
@@ -16,8 +17,25 @@ public class sort {
     static ArrayList<Long> stableVergleiche = new ArrayList<>();
     static ArrayList<Long> stableVerschieben = new ArrayList<>();
     static ArrayList<Long> stableZeit = new ArrayList<>();
+    static int arrSize, rndSize, loopSize;
 
     public static void main(String[] args) {
+        //program arguments
+            for(int i = 0; i < args.length; i++){
+            arrSize = Integer.parseInt(args[0]);
+            rndSize = Integer.parseInt(args[1]);
+            loopSize = Integer.parseInt(args[2]);
+        }
+
+        //cmd
+/*
+        System.out.println("Arraygröße: ");
+        arrSize = r.nextInt();
+        System.out.println("Randombereich: ");
+        rndSize = r.nextInt();
+        System.out.println("Wiederholungen");
+        loopSize = r.nextInt();
+*/
         for(int i = 0; i < 100; i++) {
             int[] array = createArray();
             bubbleSort(copyArray(array));
@@ -26,7 +44,6 @@ public class sort {
             stableSelectionSort(copyArray(array));
         }
         output();
-
     }
     static int[] createArray() {
         int[] array = new int[1000];
