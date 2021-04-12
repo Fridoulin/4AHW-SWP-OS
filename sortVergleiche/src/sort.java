@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class sort {
+public class sortVGL {
     static Scanner r = new Scanner(System.in);
     static ArrayList<Long> insertionVergleiche = new ArrayList<>();
     static ArrayList<Long> insertionVerschieben = new ArrayList<>();
@@ -21,12 +21,11 @@ public class sort {
 
     public static void main(String[] args) {
         //program arguments
-            for(int i = 0; i < args.length; i++){
+        for(int i = 0; i < args.length; i++){
             arrSize = Integer.parseInt(args[0]);
             rndSize = Integer.parseInt(args[1]);
             loopSize = Integer.parseInt(args[2]);
         }
-
         //cmd
 /*
         System.out.println("Arraygröße: ");
@@ -43,7 +42,6 @@ public class sort {
             selectionSort(copyArray(array));
             stableSelectionSort(copyArray(array));
         }
-        output();
     }
     static int[] createArray() {
         int[] array = new int[1000];
@@ -53,7 +51,6 @@ public class sort {
         }
         return array;
     }
-
     static int[] copyArray(int[] arrCopy) {
         int[] array = new int[1000];
         for (int i = 0; i < arrCopy.length; i++) {
@@ -61,7 +58,6 @@ public class sort {
         }
         return array;
     }
-
     static void bubbleSort(int[] array) {
         long tempVergleiche = 0;
         long tempVerschieben = 0;
@@ -82,13 +78,13 @@ public class sort {
         bubbleZeit.add(tempZeitEnde-tempZeitAnfang);
         bubbleVergleiche.add(tempVergleiche);
         bubbleVerschieben.add(tempVerschieben);
+        System.out.println("Bubblesort: ");
+        output(bubbleVergleiche, bubbleVerschieben, bubbleZeit);
     }
-
     static void insertionSort(int[] array){
         long tempVergleiche = 0;
         long tempVerschieben = 0;
         long tempZeitAnfang = System.nanoTime();
-
         for(int i = 0; i < array.length; i++){
             int key = array[i];
             int j = i-1;
@@ -104,8 +100,9 @@ public class sort {
         insertionZeit.add(tempZeitEnde-tempZeitAnfang);
         insertionVergleiche.add(tempVergleiche);
         insertionVerschieben.add(tempVerschieben);
+        System.out.println("Interstionsort: ");
+        output(insertionVergleiche, insertionVerschieben, insertionZeit);
     }
-
     static void selectionSort(int[] array) {
         long tempVergleiche = 0;
         long tempVerschieben = 0;
@@ -129,14 +126,14 @@ public class sort {
         selectionZeit.add(tempZeitEnde-tempZeitAnfang);
         selectionVergleiche.add(tempVergleiche);
         selectionVerschieben.add(tempVerschieben);
+        System.out.println("Selectionsort: ");
+        output(selectionVergleiche, selectionVerschieben, selectionZeit);
     }
-
     static void stableSelectionSort(int[] array) {
         long tempVergleiche = 0;
         long tempVerschieben = 0;
         int n = array.length;
         long tempZeitAnfang = System.nanoTime();
-
         for (int i = 0; i < n; i++) {
             int min = i;
             for (int j = i + 1; j < n; j++) {
@@ -157,8 +154,10 @@ public class sort {
         stableZeit.add(tempZeitEnde-tempZeitAnfang);
         stableVergleiche.add(tempVergleiche);
         stableVerschieben.add(tempVerschieben);
-    }
 
+        System.out.println("Stable Selcetionsort");
+        output(stableVergleiche, stableVerschieben, stableZeit);
+    }
     static long avg(ArrayList<Long> array){
         long temp = 0, avg;
         for(int i = 0; i < array.size(); i++){
@@ -167,46 +166,18 @@ public class sort {
         avg = temp/array.size();
         return avg;
     }
-
     static long median (ArrayList<Long> array){
         Collections.sort(array);
         long median;
         median = array.get(array.size()/2);
         return median;
     }
-
-    static void output(){
-        System.out.println("Bubblesort: ");
-        System.out.println("Durchschnitt Vergleiche: "+avg(bubbleVergleiche));
-        System.out.println("Durchschnitt Verschbiebungen: "+avg(bubbleVerschieben));
-        System.out.println("Median Vergleiche: "+median(bubbleVergleiche));
-        System.out.println("Median Verschiebungen: "+median(bubbleVerschieben));
-        System.out.println("Zeit in Nanosekunden: "+avg(bubbleZeit));
+    static void output(ArrayList<Long> vergleiche, ArrayList<Long> verschieben, ArrayList<Long> zeit){
+        System.out.println("Durchschnitt Vergleiche: "+avg(vergleiche));
+        System.out.println("Durchschnitt Verschbiebungen: "+avg(verschieben));
+        System.out.println("Median Vergleiche: "+median(vergleiche));
+        System.out.println("Median Verschiebungen: "+median(verschieben));
+        System.out.println("Zeit in Nanosekunden: "+avg(zeit));
         System.out.println("");
-        System.out.println("Insertionsort: ");
-        System.out.println("Durchschnitt Vergleiche: "+avg(insertionVergleiche));
-        System.out.println("Durchschnitt Verschbiebungen: "+avg(insertionVerschieben));
-        System.out.println("Median Vergleiche: "+median(insertionVergleiche));
-        System.out.println("Median Verschiebungen: "+median(insertionVerschieben));
-        System.out.println("Zeit in Nanosekunden: "+avg(insertionZeit));
-        System.out.println("");
-        System.out.println("Selectionsort: ");
-        System.out.println("Durchschnitt Vergleiche: "+avg(selectionVergleiche));
-        System.out.println("Durchschnitt Verschbiebungen: "+avg(selectionVerschieben));
-        System.out.println("Median Vergleiche: "+median(selectionVergleiche));
-        System.out.println("Median Verschiebungen: "+median(selectionVerschieben));
-        System.out.println("Zeit in Nanosekunden: "+avg(selectionZeit));
-        System.out.println("");
-        System.out.println("Stable Selectionsort: ");
-        System.out.println("Durchschnitt Vergleiche: "+avg(stableVergleiche));
-        System.out.println("Durchschnitt Verschbiebungen: "+avg(stableVerschieben));
-        System.out.println("Median Vergleiche: "+median(stableVergleiche));
-        System.out.println("Median Verschiebungen: "+median(stableVerschieben));
-        System.out.println("Zeit in Nanosekunden: "+avg(stableZeit));
-
     }
-
-
-
-
 }
