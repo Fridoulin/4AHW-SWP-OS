@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class sortVGL {
+public class sort {
     static Scanner r = new Scanner(System.in);
     static ArrayList<Long> insertionVergleiche = new ArrayList<>();
     static ArrayList<Long> insertionVerschieben = new ArrayList<>();
@@ -17,11 +17,17 @@ public class sortVGL {
     static ArrayList<Long> stableVergleiche = new ArrayList<>();
     static ArrayList<Long> stableVerschieben = new ArrayList<>();
     static ArrayList<Long> stableZeit = new ArrayList<>();
+
+    static ArrayList<Long> quickVergleiche = new ArrayList<>();
+    static ArrayList<Long> quickVerschieben = new ArrayList<>();
+    static ArrayList<Long> quickZeit = new ArrayList<>();
+    static ArrayList<Integer> arr = new ArrayList<>();
+    static int arrMin, arrMax;
     static int arrSize, rndSize, loopSize;
 
     public static void main(String[] args) {
         //program arguments
-        for(int i = 0; i < args.length; i++){
+            for(int i = 0; i < args.length; i++){
             arrSize = Integer.parseInt(args[0]);
             rndSize = Integer.parseInt(args[1]);
             loopSize = Integer.parseInt(args[2]);
@@ -36,26 +42,29 @@ public class sortVGL {
         System.out.println("Wiederholungen");
         loopSize = r.nextInt();
 */
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < loopSize; i++) {
             int[] array = createArray();
             bubbleSort(copyArray(array));
             insertionSort(copyArray(array));
             selectionSort(copyArray(array));
             stableSelectionSort(copyArray(array));
+            quickSort(copyArray(array),Collections.min(arr), Collections.max(arr));
         }
         output();
+
     }
     static int[] createArray() {
-        int[] array = new int[1000];
+        int[] array = new int[arrSize];
         Random random = new Random();
         for (int i = 0; i < array.length; i++) {
-            array[i] = random.nextInt(1000);
+            array[i] = random.nextInt(rndSize);
+            arr.add(random.nextInt(rndSize));
         }
         return array;
     }
 
     static int[] copyArray(int[] arrCopy) {
-        int[] array = new int[1000];
+        int[] array = new int[arrSize];
         for (int i = 0; i < arrCopy.length; i++) {
             array[i] = arrCopy[i];
         }
@@ -158,6 +167,52 @@ public class sortVGL {
         stableVergleiche.add(tempVergleiche);
         stableVerschieben.add(tempVerschieben);
     }
+
+
+
+
+    static void swap(int[] arr, int i, int j) {
+        long tempVerschieben = 0;
+
+        int temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+        tempVerschieben++;
+        quickVerschieben.add(tempVerschieben);
+    }
+    static int partition(int[] arr, int low, int high) {
+        long tempVergleiche = 0;
+
+        int pivot = arr[high];
+        int i = (low - 1);
+        for(int j = low; j <= high - 1; j++)
+        {
+            if (arr[j] < pivot)
+            {
+                i++;
+                tempVergleiche++;
+                swap(arr, i, j);
+            }
+        }
+        swap(arr, i + 1, high);
+        quickVergleiche.add(tempVergleiche);
+        return (i + 1);
+    }
+
+    static void quickSort(int[] arr, int low, int high) {
+        long tempZeitAnfang = System.nanoTime();
+        if (low < high)
+        {
+            int pi = partition(arr, low, high);
+            quickSort(arr, low, pi - 1);
+            quickSort(arr, pi + 1, high);
+        }
+        long tempZeitEnde = System.nanoTime();
+        quickZeit.add(tempZeitEnde-tempZeitAnfang);
+    }
+
+
+
     static long avg(ArrayList<Long> array){
         long temp = 0, avg;
         for(int i = 0; i < array.size(); i++){
@@ -166,12 +221,14 @@ public class sortVGL {
         avg = temp/array.size();
         return avg;
     }
+
     static long median (ArrayList<Long> array){
         Collections.sort(array);
         long median;
         median = array.get(array.size()/2);
         return median;
     }
+
     static void output(){
         System.out.println("Bubblesort: ");
         System.out.println("Durchschnitt Vergleiche: "+avg(bubbleVergleiche));
@@ -200,8 +257,17 @@ public class sortVGL {
         System.out.println("Median Vergleiche: "+median(stableVergleiche));
         System.out.println("Median Verschiebungen: "+median(stableVerschieben));
         System.out.println("Zeit in Nanosekunden: "+avg(stableZeit));
+        System.out.println("");
+        System.out.println("Quicksort: ");
+        System.out.println("Durchschnitt Vergleiche: "+avg(quickVergleiche));
+        System.out.println("Durchschnitt Verschbiebungen: "+avg(quickVerschieben));
+        System.out.println("Median Vergleiche: "+median(quickVergleiche));
+        System.out.println("Median Verschiebungen: "+median(quickVerschieben));
+        System.out.println("Zeit in Nanosekunden: "+avg(quickZeit));
+
 
     }
+
 
 
 
